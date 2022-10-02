@@ -11,13 +11,15 @@ class SplashController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+
     ///Here we check if the user logged in before and has saved Token
-    if (await storage.read(key: 'Token') != null) {
+    String? savedToken = await storage.read(key: 'Token');
+    if (savedToken != null) {
       if (await BiometricHelper().hasBiometrics()) {
         if (await BiometricHelper().authenticated()) {
-          ///Make API call to sign in with Token an then navigate to Home Screen if success and safe the Token
-          /*storage*/
-         await storage.write(key: 'Token', value: 'We will save the token value here');
+          ///Make API call to sign in with Token " savedToken "an then navigate to Home Screen if success After saving the Token
+          await storage.write(
+              key: 'Token', value: 'We will save the token value here');
           Get.offAll(() => const HomeScreen());
         } else {
           /// not authenticated so we navigate to LoginScreen
